@@ -8,13 +8,13 @@ require 'plugins/mail_notifier'
 
 class Pipeline
   def initialize
-    @input = FilesLoader.new
+    @loader = FilesLoader.new
     @process = FileFilter.new
     @notifier = MailNotifier.new
   end
   
   def execute
-    files = @input.load
+    files = @loader.load
     ret = @process.execute(files)
     @notifier.notify(ret) if ret.size > 0
   end
